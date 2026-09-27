@@ -1,0 +1,21 @@
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+.venv/
+venv/
+
+# Operating system files
+.DS_Store
+
+# Environment variables and secrets
+.env
+.env.*
+
+# Raw datasets and local database
+data/raw/
+
+# Training checkpoints
+model_output/checkpoint-*/
