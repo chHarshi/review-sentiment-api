@@ -145,3 +145,31 @@ a genuinely pretrained model instead, fine-tuned rather than trained from scratc
 - Result: {"label": "positive", "confidence": 0.9876} — identical to the
   non-Docker result, confirming containerization changed nothing about
   model behavior, only how/where it runs
+## Week 4 — GitHub Push: Bloated History Issue
+
+- First push attempt failed (HTTP 408 timeout) trying to upload 2.02 GiB,
+  despite currently-tracked files being clean and small
+- Root cause: earlier commits in git history had included large files
+  (likely training checkpoint folders) before .gitignore excluded them;
+  .gitignore only prevents FUTURE commits from including files, it does
+  NOT remove things already committed in history
+- Fix: deleted the entire .git folder and reinitialized from scratch,
+  since this is a personal project with no team history worth preserving
+- Result: clean push, 268MB via Git LFS (the actual model) + 2.24 MiB for
+  code/config — confirms the bloat was entirely leftover history, not
+  anything currently needed
+- Lesson: always check .gitignore is in place BEFORE the first commit,
+  not after — cleaning up history later is possible (git filter-branch,
+  BFG Repo-Cleaner) but a fresh start is simpler when no history needs saving
+## Week 4 — CLOSED: Live Deployment
+
+- Deployed to Render.com (free tier, 512MB RAM) after Hugging Face Spaces
+  required a paid plan for Docker SDK
+- No memory issues encountered despite the risk flagged beforehand —
+  512MB was sufficient for DistilBERT + FastAPI + transformers in practice
+- Live URL: https://review-sentiment-api-f8dq.onrender.com
+- Note: free tier spins down after ~15 min inactivity; first request after
+  idle time will be slow (cold start, 30-60s) — expected, not a bug
+- Full project now complete: fine-tuned pretrained model (validated via
+  true holdout testing) -> FastAPI service -> Docker container -> live
+  public deployment on GitHub
