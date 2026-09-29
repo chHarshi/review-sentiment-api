@@ -7,6 +7,12 @@ scratch (no pretrained language knowledge) failed to generalize to new data.
 This project fine-tunes a genuinely pretrained model instead, and validates
 that choice with a true independent holdout test.
 
+## Project Components
+
+- **FastAPI backend:** REST API for sentiment predictions.
+- **Gradio UI:** Interactive web interface for entering reviews.
+- **Fine-tuned DistilBERT model:** Performs binary sentiment classification.
+  
 ## Problem
 
 Companies — particularly FMCG/food & grocery brands — receive large volumes
@@ -67,8 +73,19 @@ theoretical claim.
 Built with FastAPI. Two endpoints:
 - `GET /` — service info and an explicit limitation disclaimer
 - `POST /predict` — takes `{"text": "..."}`, returns `{"label": "positive"|"negative", "confidence": 0.0-1.0}`
+  
 
-**Live demo:** https://review-sentiment-api-f8dq.onrender.com/docs
+## Live Demos
+
+This project provides two ways to interact with the sentiment model:
+
+- **Gradio Web UI:** https://review-sentiment-api-1.onrender.com
+  - Interactive interface for entering a review and viewing the prediction.
+    
+- **FastAPI Swagger Docs:** https://review-sentiment-api-f8dq.onrender.com/docs
+  - API documentation for testing the REST endpoint directly.
+
+The Gradio interface provides a user-friendly way to submit reviews and view predictions.
 
 ## Known Limitation
 
@@ -96,7 +113,7 @@ response, not a hidden flaw.
   (~3 hours for this fine-tuning run).
 
 ## Tech Stack
-Python, PyTorch, Hugging Face Transformers, FastAPI, Docker, DistilBERT
+Python, PyTorch, Hugging Face Transformers, DistilBERT, FastAPI, Gradio, Docker
 
 ## How to Run
 
